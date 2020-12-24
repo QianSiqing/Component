@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <style>
+            html,body {
+                  width: 100%;
+                  height: 100%;
+                  padding: 0;
+                  margin: 0;
+            }
+            .container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  /* vh：视口，指浏览器的可视区域，1vh=视口高度的1%，可用做自适应布局 */
+                  min-height: 100vh;
+                  background-color: #f8f005;
+            }
+            button, button::after {
+                  width: 380px;
+                  height: 86px;
+                  font-size: 36px;
+                  /* liner-gradient()渐变函数，当颜色设置百分比后，会从距离顶端的百分比距离内填充实色，而渐变色会在顶部与尾部的中间填充 */
+                  /* 渐变过渡区的占比为总的空间（高度或宽度）减去上下两个着色块空间占比剩下的空间 */
+                  background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+                  border: 0;
+                  color: #fff;
+                  /* letter-spacing: 3px; */
+                  line-height: 86px;
+                  box-shadow: 6px 0px 0px #00e6f6;
+                  /* outline用于绘制元素周围的一条线，位于边框边缘的外围，起到突出元素的作用 */
+                  /* 将outline设定为透明，点击按钮时就不会有浏览器预设的边框 */
+                  outline: transparent;
+                  /* 用来定位伪元素 */
+                  position: relative;
+            }
+            button::after {
+                  /* 预设值 */
+                  --slice-0: inset(50% 50% 50% 50%);
+                  /* 将这个切片保存到CSS变数中，名为slice-1 */
+                  --slice-1: inset(80% -6px 0 0);
+                  --slice-2: inset(50% -6px 30% 0);
+                  /* 上面 */
+                  --slice-3: inset(10% -6px 85% 0);
+                  /* 文字 */
+                  --slice-4: inset(30% -6px 43% 0);
+                  /* 下面 */
+                  --slice-5: inset(80% -6px 5% 0);
+                  /* content属性与before和after微元素配合使用，来插入生成内容 */
+                  content: 'AVAILABLE NOW';
+                  display: block; 
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  bottom: 0;
+                  background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #ff013c 5%);
+                  text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+                  /* 只显示裁剪的区域，而区域外的不显示 */
+                  /* inset5个参数，分别是top,right,bottom,left要向内缩小多少，round,radius(可选，圆角) */
+                  /* 右边设定为-6px的原因是右边有一个6px的蓝色边框，由于它不计算在容器内，所以要将右边设定为负数 */
+                  /* clip-path: inset(80% 0 0 0);  */
+                  /* transform: translate(-20px, 10px); */
+                  /* 预设clip-path */
+                  clip-path: var(--slice-0);
+            }
+            button:hover::after {
+                  animation: glitch 1s;
+                  /* 设置动画播放时间，数字越小越卡顿 */
+                  animation-timing-function: steps(1, end);
+            }
+            /* 动画 */
+            @keyframes glitch {
+                  0% {
+                        clip-path: var(--slice-1);
+                        /* 水平垂直轴移动 */
+                        transform: translate(-20px, -10px);
+                  }
+                  10% {
+                        clip-path: var(--slice-3);
+                        transform: translate(10px, 10px);
+                  }
+                  20% {
+                        clip-path: var(--slice-1);
+                        transform: translate(-10px, 10px);
+                  }
+                  30% {
+                        clip-path: var(--slice-4);
+                        transform: translate(-10px, -5px);
+                  }
+                  40% {
+                        clip-path: var(--slice-2);
+                        transform: translate(-5px, 0px);
+                  }
+                  50% {
+                        clip-path: var(--slice-3);
+                        transform: translate(5px, 0px);
+                  }
+                  60% {
+                        clip-path: var(--slice-4);
+                        transform: translate(5px, 10px);
+                  }
+                  70% {
+                        clip-path: var(--slice-2);
+                        transform: translate(-10px, 10px);
+                  }
+                  80% {
+                        clip-path: var(--slice-5);
+                        transform: translate(20px, -10px);
+                  }
+                  90% {
+                        clip-path: var(--slice-4);
+                        transform: translate(-10px, 0px);
+                  }
+                  100% {
+                        clip-path: var(--slice-1);
+                        transform: translate(0);
+                  }
+            }
+      </style>
+</head>
+<body>
+      <div class="container">
+            <button>AVAILABLE NOW</button>
+      </div>
+</body>
+</html>
